@@ -3,7 +3,6 @@
 namespace Backstage\Announcements\Livewire;
 
 use Livewire\Component;
-use Backstage\Announcements\Collections\ScopeCollection;
 
 class AnnouncementsContainer extends Component
 {

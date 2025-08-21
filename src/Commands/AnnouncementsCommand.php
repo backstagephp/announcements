@@ -2,8 +2,8 @@
 
 namespace Backstage\Announcements\Commands;
 
-use Illuminate\Console\Command;
 use Backstage\Announcements\Models\Announcement;
+use Illuminate\Console\Command;
 
 class AnnouncementsCommand extends Command
 {

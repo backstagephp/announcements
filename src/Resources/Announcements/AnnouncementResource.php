@@ -3,21 +3,21 @@
 namespace Backstage\Announcements\Resources\Announcements;
 
 use BackedEnum;
-use Filament\Tables\Table;
-use Filament\Schemas\Schema;
-use Filament\Resources\Resource;
-use Filament\Support\Icons\Heroicon;
-use Illuminate\Database\Eloquent\Builder;
 use Backstage\Announcements\Models\Announcement;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Backstage\Announcements\Resources\Announcements\Pages\EditAnnouncement;
-use Backstage\Announcements\Resources\Announcements\Pages\ViewAnnouncement;
-use Backstage\Announcements\Resources\Announcements\Pages\ListAnnouncements;
 use Backstage\Announcements\Resources\Announcements\Pages\CreateAnnouncement;
+use Backstage\Announcements\Resources\Announcements\Pages\EditAnnouncement;
+use Backstage\Announcements\Resources\Announcements\Pages\ListAnnouncements;
+use Backstage\Announcements\Resources\Announcements\Pages\ViewAnnouncement;
 use Backstage\Announcements\Resources\Announcements\Schemas\AnnouncementForm;
-use Backstage\Announcements\Resources\Announcements\Tables\AnnouncementsTable;
 use Backstage\Announcements\Resources\Announcements\Schemas\AnnouncementInfolist;
+use Backstage\Announcements\Resources\Announcements\Tables\AnnouncementsTable;
 use Filament\Panel;
+use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class AnnouncementResource extends Resource
 {
@@ -25,7 +25,7 @@ class AnnouncementResource extends Resource
 
     protected static bool $isScopedToTenant = false;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string | BackedEnum | null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
     protected static ?string $recordTitleAttribute = 'title';
 

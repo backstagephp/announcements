@@ -5,13 +5,11 @@ namespace Backstage\Announcements\Collections;
 use Filament\Panel;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
 
 class ScopeCollection extends Collection
 {
     public static function create(Panel $panel)
     {
-
 
         $resources = $panel->getResources();
 
@@ -32,7 +30,7 @@ class ScopeCollection extends Collection
         dd($mutatedPages);
         $scopes = array_merge($mutatedResources, $mutatedPages);
 
-        $cached =  parent::make($scopes);
+        $cached = parent::make($scopes);
 
         return $cached;
     }
@@ -57,8 +55,7 @@ class ScopeCollection extends Collection
                     ->append(' ')
                     ->when(
                         $page->getPage()::getResource()::getNavigationGroup(),
-                        fn($group) =>
-                        $group->append('(')->append(strtolower($page->getPage()::getResource()::getNavigationGroup()))
+                        fn ($group) => $group->append('(')->append(strtolower($page->getPage()::getResource()::getNavigationGroup()))
                             ->append(')')
                     )
 
@@ -67,7 +64,7 @@ class ScopeCollection extends Collection
 
             return $labels;
         })
-            ->pipe(fn($c) => Arr::collapse($c->toArray()));
+            ->pipe(fn ($c) => Arr::collapse($c->toArray()));
 
         return $resources;
     }
@@ -80,8 +77,7 @@ class ScopeCollection extends Collection
             $value = str(method_exists($page, 'getNavigationLabel') ? $page::getNavigationLabel() : (method_exists($page, 'getLabel') ? $page::getLabel() : app($page)->getTitle()))
                 ->when(
                     method_exists($page, 'getNavigationGroup') ? $page::getNavigationGroup() : null,
-                    fn($group) =>
-                    $group->append(' (')->append(strtolower($page::getNavigationGroup()))->append(')')
+                    fn ($group) => $group->append(' (')->append(strtolower($page::getNavigationGroup()))->append(')')
                 )
                 ->toString();
 

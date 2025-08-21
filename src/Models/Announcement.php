@@ -12,7 +12,7 @@ class Announcement extends Model
     protected $fillable = [
         'title',
         'content',
-        'scopes'
+        'scopes',
     ];
 
     protected $casts = [
@@ -24,7 +24,7 @@ class Announcement extends Model
         parent::boot();
 
         static::saving(function (self $announcement) {
-            $announcement->scopes = !empty($announcement->scopes) ? $announcement->scopes : ['*'];
+            $announcement->scopes = ! empty($announcement->scopes) ? $announcement->scopes : ['*'];
         });
     }
 }

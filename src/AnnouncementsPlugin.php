@@ -2,13 +2,12 @@
 
 namespace Backstage\Announcements;
 
-use Filament\Panel;
-use Livewire\Livewire;
-use Filament\Contracts\Plugin;
-use Filament\View\PanelsRenderHook;
-use Backstage\Announcements\Collections\ScopeCollection;
 use Backstage\Announcements\Livewire\AnnouncementsContainer;
 use Backstage\Announcements\Resources\Announcements\AnnouncementResource;
+use Filament\Contracts\Plugin;
+use Filament\Panel;
+use Filament\View\PanelsRenderHook;
+use Livewire\Livewire;
 
 class AnnouncementsPlugin implements Plugin
 {
@@ -24,7 +23,7 @@ class AnnouncementsPlugin implements Plugin
         });
 
         $panel->resources([
-            AnnouncementResource::class
+            AnnouncementResource::class,
         ]);
 
         AnnouncementResource::scopeToTenant(false);
