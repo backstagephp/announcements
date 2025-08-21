@@ -8,12 +8,23 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('backstage_announcements_table', function (Blueprint $table) {
+        Schema::create('announcements', function (Blueprint $table) {
             $table->id();
 
-            // add fields
+            $table->string('title');
+
+            $table->text('content');
+
+            $table->json('scopes')
+                ->default(json_encode([]));
 
             $table->timestamps();
+            $table->softDeletes();
         });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('announcements');
     }
 };

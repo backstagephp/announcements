@@ -3,6 +3,7 @@
 namespace Backstage\Announcements\Commands;
 
 use Illuminate\Console\Command;
+use Backstage\Announcements\Models\Announcement;
 
 class AnnouncementsCommand extends Command
 {
@@ -13,6 +14,11 @@ class AnnouncementsCommand extends Command
     public function handle(): int
     {
         $this->comment('All done');
+
+        $newAnnouncement = Announcement::create([
+            'title' => 'New Announcement',
+            'content' => 'This is a new announcement.',
+        ]);
 
         return self::SUCCESS;
     }

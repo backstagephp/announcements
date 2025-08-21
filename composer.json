@@ -7,10 +7,10 @@
         "filamentphp",
         "backstage-announcements"
     ],
-    "homepage": "https://github.com/backstage/backstage-announcements",
+    "homepage": "https://github.com/backstagephp/announcements",
     "support": {
-        "issues": "https://github.com/backstage/backstage-announcements/issues",
-        "source": "https://github.com/backstage/backstage-announcements"
+        "issues": "https://github.com/backstagephp/announcements/issues",
+        "source": "https://github.com/backstagephp/announcements"
     },
     "license": "MIT",
     "authors": [

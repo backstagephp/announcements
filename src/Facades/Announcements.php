@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * @see \Backstage\Announcements\Announcements
+ *
+ * @method static register()
  */
 class Announcements extends Facade
 {

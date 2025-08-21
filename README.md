@@ -14,7 +14,7 @@ This is where your description should go. Limit it to a paragraph or two. Consid
 You can install the package via composer:
 
 ```bash
-composer require backstage/backstage-announcements
+composer require backstage/announcements
 ```
 
 > [!IMPORTANT]
@@ -23,7 +23,7 @@ composer require backstage/backstage-announcements
 After setting up a custom theme add the plugin's views to your theme css file or your app's css file if using the standalone packages.
 
 ```css
-@source '../../../../vendor/backstage/backstage-announcements/resources/**/*.blade.php';
+@source '../../../../vendor/backstage/announcements/resources/**/*.blade.php';
 ```
 
 You can publish and run the migrations with:

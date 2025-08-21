@@ -14,13 +14,14 @@ use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Backstage\Announcements\Commands\AnnouncementsCommand;
+use Backstage\Announcements\Facades\Announcements;
 use Backstage\Announcements\Testing\TestsAnnouncements;
 
 class AnnouncementsServiceProvider extends PackageServiceProvider
 {
-    public static string $name = 'backstage-announcements';
+    public static string $name = 'backstage/announcements';
 
-    public static string $viewNamespace = 'backstage-announcements';
+    public static string $viewNamespace = 'backstage/announcements';
 
     public function configurePackage(Package $package): void
     {
@@ -33,6 +34,7 @@ class AnnouncementsServiceProvider extends PackageServiceProvider
             ->hasCommands($this->getCommands())
             ->hasInstallCommand(function (InstallCommand $command) {
                 $command
+                    ->setName('backstage:announcements:install')
                     ->publishConfigFile()
                     ->publishMigrations()
                     ->askToRunMigrations()
@@ -87,11 +89,13 @@ class AnnouncementsServiceProvider extends PackageServiceProvider
 
         // Testing
         Testable::mixin(new TestsAnnouncements);
+
+        $this->loadAnnouncements();
     }
 
     protected function getAssetPackageName(): ?string
     {
-        return 'backstage/backstage-announcements';
+        return 'backstage/announcements';
     }
 
     /**
@@ -102,7 +106,7 @@ class AnnouncementsServiceProvider extends PackageServiceProvider
         return [
             // AlpineComponent::make('backstage-announcements', __DIR__ . '/../resources/dist/components/backstage-announcements.js'),
             // Css::make('backstage-announcements-styles', __DIR__ . '/../resources/dist/backstage-announcements.css'),
-            // Js::make('backstage-announcements-scripts', __DIR__ . '/../resources/dist/backstage-announcements.js'),
+            Js::make('backstage-announcements-scripts', __DIR__ . '/../resources/dist/backstage-announcements.js'),
         ];
     }
 
@@ -146,7 +150,12 @@ class AnnouncementsServiceProvider extends PackageServiceProvider
     protected function getMigrations(): array
     {
         return [
-            'create_backstage-announcements_table',
+            'create_backstage_announcements_table',
         ];
+    }
+
+    protected function loadAnnouncements()
+    {
+        Announcements::register();
     }
 }
