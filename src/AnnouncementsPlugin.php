@@ -2,12 +2,9 @@
 
 namespace Backstage\Announcements;
 
-use Backstage\Announcements\Livewire\AnnouncementsContainer;
 use Backstage\Announcements\Resources\Announcements\AnnouncementResource;
 use Filament\Contracts\Plugin;
 use Filament\Panel;
-use Filament\View\PanelsRenderHook;
-use Livewire\Livewire;
 
 class AnnouncementsPlugin implements Plugin
 {

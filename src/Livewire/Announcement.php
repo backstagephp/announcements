@@ -15,7 +15,7 @@ class Announcement extends Component
     public function mount(ModelsAnnouncement $announcement, $scope)
     {
         $this->announcement = $announcement;
-        
+
         $this->scope = $scope;
 
         $this->getColor();

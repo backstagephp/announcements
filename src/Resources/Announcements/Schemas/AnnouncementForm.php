@@ -9,7 +9,6 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 use Filament\Support\Colors\ColorManager;
-use Filament\Support\Facades\FilamentColor;
 use Filament\Support\Icons\Heroicon;
 
 class AnnouncementForm
@@ -33,19 +32,19 @@ class AnnouncementForm
 
                 Select::make('color')
                     ->live()
-                    ->prefixIcon(Heroicon::OutlinedCube,true)
-                    ->prefixIconColor(fn(?string $state) => $state ?? 'gray')
+                    ->prefixIcon(Heroicon::OutlinedCube, true)
+                    ->prefixIconColor(fn (?string $state) => $state ?? 'gray')
                     ->options(function () {
                         $colors = ColorManager::DEFAULT_COLORS;
-                        
+
                         return collect($colors)
                             ->keys()
-                            ->mapWithKeys(function ($key) use ($colors) {
+                            ->mapWithKeys(function ($key) {
                                 return [
-                                    $key => $key
+                                    $key => $key,
                                 ];
                             });
-                    })
+                    }),
             ]);
     }
 }

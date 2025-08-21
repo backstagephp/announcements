@@ -13,8 +13,8 @@ class Announcements
 {
     public function register()
     {
-        if (!Schema::hasTable(app(Announcement::class)->getTable())) {
-          return;
+        if (! Schema::hasTable(app(Announcement::class)->getTable())) {
+            return;
         }
 
         Announcement::all()->each(function ($announcement) {
