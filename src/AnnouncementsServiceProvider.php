@@ -89,8 +89,6 @@ class AnnouncementsServiceProvider extends PackageServiceProvider
 
         // Testing
         Testable::mixin(new TestsAnnouncements);
-
-        $this->loadAnnouncements();
     }
 
     protected function getAssetPackageName(): ?string
@@ -152,10 +150,5 @@ class AnnouncementsServiceProvider extends PackageServiceProvider
         return [
             'create_backstage_announcements_table',
         ];
-    }
-
-    protected function loadAnnouncements()
-    {
-        Announcements::register();
     }
 }

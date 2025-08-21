@@ -27,7 +27,6 @@ class ScopeCollection extends Collection
 
         $mutatedPages = static::mutatePages($pages);
 
-        dd($mutatedPages);
         $scopes = array_merge($mutatedResources, $mutatedPages);
 
         $cached = parent::make($scopes);

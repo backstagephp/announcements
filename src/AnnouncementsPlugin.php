@@ -18,15 +18,13 @@ class AnnouncementsPlugin implements Plugin
 
     public function register(Panel $panel): void
     {
-        $panel->renderHook(PanelsRenderHook::CONTENT_START, function (array $scopes) {
-            return Livewire::mount(AnnouncementsContainer::class, ['scopes' => $scopes]);
-        });
-
         $panel->resources([
             AnnouncementResource::class,
         ]);
 
         AnnouncementResource::scopeToTenant(false);
+
+        \Backstage\Announcements\Facades\Announcements::register();
     }
 
     public function boot(Panel $panel): void {}

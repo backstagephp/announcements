@@ -18,6 +18,9 @@ return new class extends Migration
             $table->json('scopes')
                 ->default(json_encode([]));
 
+            $table->string('color')
+                ->default('info');
+
             $table->timestamps();
             $table->softDeletes();
         });
