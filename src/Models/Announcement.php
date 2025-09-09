@@ -49,6 +49,10 @@ class Announcement extends Model
 
     public function isDismissedBy(?int $userId = null): bool
     {
+        if (! Filament::auth()->check()) {
+            return false;
+        }
+
         if (is_null($userId)) {
             $userId = Filament::auth()->user()->id;
         }
