@@ -10,7 +10,6 @@ class ScopeCollection extends Collection
 {
     public static function create(Panel $panel)
     {
-
         $resources = $panel->getResources();
 
         $mutatedResources = static::mutateResources($resources);

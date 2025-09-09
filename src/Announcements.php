@@ -3,6 +3,7 @@
 namespace Backstage\Announcements;
 
 use Backstage\Announcements\Models\Announcement;
+use Filament\Facades\Filament;
 use Filament\Pages\Page;
 use Filament\Pages\SimplePage;
 use Filament\Support\Facades\FilamentView;
@@ -30,7 +31,13 @@ class Announcements
                 if ($hook) {
                     FilamentView::registerRenderHook(
                         name: $hook,
-                        hook: fn () => $announcement->render($scope),
+                        hook: function () use ($announcement, $scope) {
+                            if ($announcement->isDismissedBy(Filament::auth()->user()?->id)) {
+                                return '';
+                            }
+
+                            return $announcement->render($scope);
+                        },
                         scopes: $scope
                     );
                 }

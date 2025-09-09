@@ -23,6 +23,10 @@ class Announcement extends Component
 
     public function render()
     {
+        if ($this->announcement->isDismissedBy()) {
+            return '<div></div>';
+        }
+
         return view('backstage/announcements::livewire.announcement');
     }
 
@@ -38,5 +42,13 @@ class Announcement extends Component
     public function canMarkAsRead(): bool
     {
         return Filament::auth()->check();
+    }
+
+    public function markAsRead()
+    {
+        if (! $this->announcement->isDismissedBy()) {
+            $this->announcement->dismissals()->create([
+            ]);
+        }
     }
 }

@@ -4,6 +4,7 @@ namespace Backstage\Announcements;
 
 use Backstage\Announcements\Commands\AnnouncementsCommand;
 use Backstage\Announcements\Facades\Announcements;
+use Backstage\Announcements\Livewire\Announcement;
 use Backstage\Announcements\Testing\TestsAnnouncements;
 use Filament\Support\Assets\AlpineComponent;
 use Filament\Support\Assets\Asset;
@@ -13,6 +14,7 @@ use Filament\Support\Facades\FilamentAsset;
 use Filament\Support\Facades\FilamentIcon;
 use Illuminate\Filesystem\Filesystem;
 use Livewire\Features\SupportTesting\Testable;
+use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -77,6 +79,8 @@ class AnnouncementsServiceProvider extends PackageServiceProvider
 
         // Icon Registration
         FilamentIcon::register($this->getIcons());
+
+        Livewire::component('backstage.announcements.livewire.announcement', Announcement::class);
 
         // Handle Stubs
         if (app()->runningInConsole()) {
@@ -149,6 +153,7 @@ class AnnouncementsServiceProvider extends PackageServiceProvider
     {
         return [
             'create_backstage_announcements_table',
+            'create_announcement_dismissals_table',
         ];
     }
 }
