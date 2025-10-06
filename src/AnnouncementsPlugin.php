@@ -5,9 +5,16 @@ namespace Backstage\Announcements;
 use Backstage\Announcements\Resources\Announcements\AnnouncementResource;
 use Filament\Contracts\Plugin;
 use Filament\Panel;
+use Filament\Support\Concerns\EvaluatesClosures;
 
 class AnnouncementsPlugin implements Plugin
 {
+    use EvaluatesClosures;
+
+    protected bool $shouldRegisterNavigation = true;
+
+    protected array | \Closure | null $forcedScopes = null;
+
     public function getId(): string
     {
         return 'backstage-announcements';
@@ -15,11 +22,13 @@ class AnnouncementsPlugin implements Plugin
 
     public function register(Panel $panel): void
     {
+        // Set navigation registration before registering the resource
+        AnnouncementResource::setShouldRegisterNavigation($this->shouldRegisterNavigation);
+        AnnouncementResource::scopeToTenant(false);
+
         $panel->resources([
             AnnouncementResource::class,
         ]);
-
-        AnnouncementResource::scopeToTenant(false);
 
         \Backstage\Announcements\Facades\Announcements::register();
     }
@@ -37,5 +46,24 @@ class AnnouncementsPlugin implements Plugin
         $plugin = filament(app(static::class)->getId());
 
         return $plugin;
+    }
+
+    public function canRegisterNavigation(bool $canRegister = true): static
+    {
+        $this->shouldRegisterNavigation = $canRegister;
+
+        return $this;
+    }
+
+    public function forceScopes(array | \Closure $scopes): static
+    {
+        $this->forcedScopes = $scopes;
+
+        return $this;
+    }
+
+    public function getForcedScopes(): array | null
+    {
+        return $this->evaluate($this->forcedScopes);
     }
 }

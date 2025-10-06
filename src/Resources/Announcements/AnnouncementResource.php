@@ -29,6 +29,23 @@ class AnnouncementResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'title';
 
+    protected static bool $shouldRegisterNavigation = true;
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return static::$shouldRegisterNavigation;
+    }
+
+    public static function scopeToTenant(bool $scoped = true): void
+    {
+        static::$isScopedToTenant = $scoped;
+    }
+
+    public static function setShouldRegisterNavigation(bool $shouldRegister): void
+    {
+        static::$shouldRegisterNavigation = $shouldRegister;
+    }
+
     public static function getSlug(?Panel $panel = null): string
     {
         return '/announcements';

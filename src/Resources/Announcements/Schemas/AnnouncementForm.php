@@ -2,6 +2,7 @@
 
 namespace Backstage\Announcements\Resources\Announcements\Schemas;
 
+use Backstage\Announcements\AnnouncementsPlugin;
 use Backstage\Announcements\Collections\ScopeCollection;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\Select;
@@ -27,7 +28,24 @@ class AnnouncementForm
                 Select::make('scopes')
                     ->searchable()
                     ->multiple()
-                    ->options(ScopeCollection::create(Filament::getCurrentPanel())->toArray())
+                    ->options(function () {
+                        $plugin = AnnouncementsPlugin::get();
+                        $forcedScopes = $plugin->getForcedScopes();
+
+                        return ScopeCollection::create(Filament::getCurrentPanel(), $forcedScopes)->toArray();
+                    })
+                    ->formatStateUsing(function ($state) {
+                        if (empty($state)) {
+                            return $state;
+                        }
+
+                        // Convert class names to formatted names for display
+                        $plugin = AnnouncementsPlugin::get();
+                        $forcedScopes = $plugin->getForcedScopes();
+                        $allScopes = ScopeCollection::create(Filament::getCurrentPanel(), $forcedScopes)->toArray();
+
+                        return array_map(fn ($value) => $allScopes[$value] ?? $value, (array) $state);
+                    })
                     ->required(),
 
                 Select::make('color')
