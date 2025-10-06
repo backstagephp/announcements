@@ -62,7 +62,7 @@ class AnnouncementsPlugin implements Plugin
         return $this;
     }
 
-    public function getForcedScopes(): array | null
+    public function getForcedScopes(): ?array
     {
         return $this->evaluate($this->forcedScopes);
     }
