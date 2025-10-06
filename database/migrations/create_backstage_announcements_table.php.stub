@@ -15,8 +15,7 @@ return new class extends Migration
 
             $table->text('content');
 
-            $table->json('scopes')
-                ->default(json_encode([]));
+            $table->json('scopes');
 
             $table->string('color')
                 ->default('info');
