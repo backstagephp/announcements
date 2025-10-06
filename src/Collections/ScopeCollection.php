@@ -8,7 +8,7 @@ use Illuminate\Support\Collection;
 
 class ScopeCollection extends Collection
 {
-    public static function create(Panel $panel)
+    public static function create(Panel $panel, array | \Closure | null $forcedScopes = null)
     {
         $resources = $panel->getResources();
 
@@ -27,6 +27,29 @@ class ScopeCollection extends Collection
         $mutatedPages = static::mutatePages($pages);
 
         $scopes = array_merge($mutatedResources, $mutatedPages);
+
+        // If forced scopes are provided, filter the scopes to only include those
+        if ($forcedScopes !== null) {
+            $filteredScopes = [];
+
+            // If it's a closure, call it to get the array of scopes
+            if ($forcedScopes instanceof \Closure) {
+                $forcedScopes = $forcedScopes($scopes);
+            }
+
+            foreach ($scopes as $key => $value) {
+                // Check if the key (page class) matches any of the forced scopes
+                foreach ($forcedScopes as $forcedScope) {
+                    if ($key === $forcedScope || is_subclass_of($key, $forcedScope)) {
+                        $filteredScopes[$key] = $value;
+
+                        break;
+                    }
+                }
+            }
+
+            $scopes = $filteredScopes;
+        }
 
         $cached = parent::make($scopes);
 
@@ -72,6 +95,10 @@ class ScopeCollection extends Collection
         $pages = new static($pages);
 
         $pages = $pages->values()->mapWithKeys(function ($page) {
+            if ($page === null) {
+                return [];
+            }
+
             $value = str(method_exists($page, 'getNavigationLabel') ? $page::getNavigationLabel() : (method_exists($page, 'getLabel') ? $page::getLabel() : app($page)->getTitle()))
                 ->when(
                     method_exists($page, 'getNavigationGroup') ? $page::getNavigationGroup() : null,
