@@ -2,6 +2,7 @@
 
 namespace Backstage\Announcements;
 
+use Backstage\Announcements\Facades\Announcements;
 use Backstage\Announcements\Resources\Announcements\AnnouncementResource;
 use Filament\Contracts\Plugin;
 use Filament\Panel;
@@ -30,7 +31,7 @@ class AnnouncementsPlugin implements Plugin
             AnnouncementResource::class,
         ]);
 
-        \Backstage\Announcements\Facades\Announcements::register();
+        Announcements::register();
     }
 
     public function boot(Panel $panel): void {}
