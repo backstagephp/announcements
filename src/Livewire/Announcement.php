@@ -4,6 +4,7 @@ namespace Backstage\Announcements\Livewire;
 
 use Backstage\Announcements\Models\Announcement as ModelsAnnouncement;
 use Filament\Facades\Filament;
+use Illuminate\Support\Arr;
 use Livewire\Component;
 
 class Announcement extends Component
@@ -32,7 +33,7 @@ class Announcement extends Component
 
     public function getColor()
     {
-        $styles = \Illuminate\Support\Arr::toCssStyles([
+        $styles = Arr::toCssStyles([
             \Filament\Support\get_color_css_variables($this->announcement->color, shades: [600]),
         ]);
 
