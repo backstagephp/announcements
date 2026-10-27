@@ -4,9 +4,12 @@ namespace Backstage\Announcements\Resources\Announcements\Schemas;
 
 use Backstage\Announcements\AnnouncementsPlugin;
 use Backstage\Announcements\Collections\ScopeCollection;
+use Backstage\Announcements\Enums\AnnouncementDisplay;
+use Backstage\Announcements\Models\Announcement;
 use Filament\Actions\Action;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -14,6 +17,8 @@ use Filament\Schemas\Components\FusedGroup;
 use Filament\Schemas\Components\Html;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Text;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Filament\Support\Colors\ColorManager;
 use Filament\Support\Enums\Width;
@@ -45,7 +50,32 @@ class AnnouncementForm
 
                                 return ScopeCollection::create(Filament::getCurrentPanel(), $forcedScopes)->toArray();
                             })
+                            ->live()
+                            ->afterStateUpdated(function ($state, Get $get, Set $set): void {
+                                if (AnnouncementDisplay::isPopupState($get('display')) && ! Announcement::scopesSupportPopup($state ?? [])) {
+                                    $set('display', AnnouncementDisplay::Banner->value);
+                                }
+                            })
                             ->required(),
+
+                        Radio::make('display')
+                            ->label(__('backstage/announcements::backstage-announcements.display.label'))
+                            ->options(AnnouncementDisplay::class)
+                            ->default(AnnouncementDisplay::Banner->value)
+                            ->required()
+                            ->columns(2)
+                            ->live()
+                            ->disableOptionWhen(fn (string $value, Get $get): bool => $value === AnnouncementDisplay::Popup->value
+                                && ! Announcement::scopesSupportPopup($get('scopes') ?? []))
+                            ->helperText(function (Get $get): ?string {
+                                if (! Announcement::scopesSupportPopup($get('scopes') ?? [])) {
+                                    return __('backstage/announcements::backstage-announcements.hints.popup_unavailable');
+                                }
+
+                                return AnnouncementDisplay::isPopupState($get('display'))
+                                    ? __('backstage/announcements::backstage-announcements.hints.popup_fallback')
+                                    : null;
+                            }),
 
                         Select::make('color')
                             ->live()
