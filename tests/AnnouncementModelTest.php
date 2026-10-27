@@ -28,6 +28,7 @@ it('decides popup support from the scopes', function () {
         ->and(Announcement::scopesSupportPopup([Login::class, Register::class]))->toBeFalse()
         ->and(Announcement::scopesSupportPopup(['*']))->toBeFalse()
         ->and(Announcement::scopesSupportPopup(['App\\Does\\Not\\Exist']))->toBeFalse()
+        ->and(Announcement::scopesSupportPopup([123, null]))->toBeFalse()
         ->and(Announcement::scopesSupportPopup([]))->toBeFalse();
 });
 

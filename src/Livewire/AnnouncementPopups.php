@@ -10,7 +10,7 @@ use Livewire\Component;
 
 class AnnouncementPopups extends Component
 {
-    /** @var array<int, int> */
+    /** @var array<int, int|string> */
     #[Locked]
     public array $announcementIds = [];
 
@@ -18,7 +18,7 @@ class AnnouncementPopups extends Component
     public int $total = 0;
 
     /**
-     * @param  array<int, int>  $announcementIds
+     * @param  array<int, int|string>  $announcementIds
      */
     public function mount(array $announcementIds): void
     {

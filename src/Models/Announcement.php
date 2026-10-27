@@ -62,12 +62,12 @@ class Announcement extends Model
     /**
      * A popup needs at least one scope that is a regular page (not a login-type SimplePage).
      *
-     * @param  array<int, string>  $scopes
+     * @param  array<int, mixed>  $scopes
      */
     public static function scopesSupportPopup(array $scopes): bool
     {
         foreach ($scopes as $scope) {
-            if (! class_exists($scope) || is_a($scope, SimplePage::class, true)) {
+            if (! is_string($scope) || ! class_exists($scope) || is_a($scope, SimplePage::class, true)) {
                 continue;
             }
 
@@ -85,7 +85,7 @@ class Announcement extends Model
     }
 
     /**
-     * @param  array<int, int>  $ids
+     * @param  array<int, int|string>  $ids
      * @return Collection<int, static>
      */
     public static function pendingPopupsFor(array $ids, int | string | null $userId): Collection
