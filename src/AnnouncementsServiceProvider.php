@@ -5,6 +5,7 @@ namespace Backstage\Announcements;
 use Backstage\Announcements\Commands\AnnouncementsCommand;
 use Backstage\Announcements\Facades\Announcements;
 use Backstage\Announcements\Livewire\Announcement;
+use Backstage\Announcements\Livewire\AnnouncementPopups;
 use Backstage\Announcements\Testing\TestsAnnouncements;
 use Filament\Support\Assets\AlpineComponent;
 use Filament\Support\Assets\Asset;
@@ -81,6 +82,7 @@ class AnnouncementsServiceProvider extends PackageServiceProvider
         FilamentIcon::register($this->getIcons());
 
         Livewire::component('backstage.announcements.livewire.announcement', Announcement::class);
+        Livewire::component('backstage.announcements.livewire.announcement-popups', AnnouncementPopups::class);
 
         // Handle Stubs
         if (app()->runningInConsole()) {

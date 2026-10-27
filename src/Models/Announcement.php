@@ -81,7 +81,7 @@ class Announcement extends Model
      * @param  array<int, int>  $ids
      * @return Collection<int, static>
      */
-    public static function pendingPopupsFor(array $ids, ?int $userId): Collection
+    public static function pendingPopupsFor(array $ids, int | string | null $userId): Collection
     {
         if ($userId === null || $ids === []) {
             return new Collection;
