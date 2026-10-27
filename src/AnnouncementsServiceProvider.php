@@ -155,6 +155,7 @@ class AnnouncementsServiceProvider extends PackageServiceProvider
             'create_backstage_announcements_table',
             'create_announcement_dismissals_table',
             'add_start_date_end_date_to_announcements_table',
+            'add_display_to_announcements_table',
         ];
     }
 }
