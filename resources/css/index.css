@@ -3,3 +3,100 @@
 
 @source "../../src/**/*.php";
 @source "../../resources/views/**/*.blade.php";
+
+/* Popup announcements. Hand-written so filament-purge keeps them. z-index 200 sits above Filament modals and notifications. */
+.ba-popup-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background-color: rgb(3 7 18 / 0.5);
+}
+
+:where(.dark) .ba-popup-overlay {
+    background-color: rgb(3 7 18 / 0.75);
+}
+
+.ba-popup-panel {
+    width: 100%;
+    max-width: 28rem;
+    border-radius: 0.75rem;
+    background-color: #fff;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1), 0 0 0 1px rgb(3 7 18 / 0.05);
+}
+
+:where(.dark) .ba-popup-panel {
+    background-color: var(--gray-900, #111827);
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.3), 0 0 0 1px rgb(255 255 255 / 0.1);
+}
+
+.ba-popup-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    margin: 0 auto;
+    border-radius: 9999px;
+    background-color: var(--color-100);
+    color: var(--color-600);
+}
+
+.ba-popup-icon svg {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.ba-popup-title {
+    margin-top: 1rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    font-weight: 600;
+    color: var(--gray-950, #030712);
+}
+
+:where(.dark) .ba-popup-title {
+    color: #fff;
+}
+
+.ba-popup-content {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: var(--gray-500, #6b7280);
+}
+
+:where(.dark) .ba-popup-content {
+    color: var(--gray-400, #9ca3af);
+}
+
+.ba-popup-counter {
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    color: var(--gray-400, #9ca3af);
+}
+
+.ba-popup-button {
+    display: block;
+    width: 100%;
+    margin-top: 1.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    border: 0;
+    background-color: var(--color-600);
+    color: #fff;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.ba-popup-button:disabled {
+    opacity: 0.7;
+}

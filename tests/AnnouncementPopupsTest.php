@@ -71,3 +71,34 @@ it('renders nothing and confirms nothing for guests', function () {
         ->assertDontSeeHtml('role="dialog"')->call('confirm', $a->id);
     expect(AnnouncementDismissal::count())->toBe(0);
 });
+
+it('offers no way to dismiss other than the confirm button', function () {
+    login();
+    $a = Announcement::factory()->popup()->create();
+    $html = livewire(AnnouncementPopups::class, ['announcementIds' => [$a->id]])->html();
+
+    expect($html)->not->toContain('keydown')->not->toContain('@click')->not->toContain('x-on:click')
+        ->not->toContain('wire:click.self')->not->toContain('aria-label="Close');
+    expect(substr_count($html, 'wire:click='))->toBe(1);
+});
+
+it('points aria-labelledby and aria-describedby at rendered element ids', function () {
+    login();
+    $a = Announcement::factory()->popup()->create();
+    $html = livewire(AnnouncementPopups::class, ['announcementIds' => [$a->id]])->html();
+
+    preg_match('/aria-labelledby="([^"]+)"/', $html, $label);
+    preg_match('/aria-describedby="([^"]+)"/', $html, $desc);
+    expect($html)->toContain('id="' . $label[1] . '"')->toContain('id="' . $desc[1] . '"');
+});
+
+it('ships every ba-popup class used by the view in the compiled css', function () {
+    $view = file_get_contents(__DIR__ . '/../resources/views/livewire/announcement-popups.blade.php');
+    $css = file_get_contents(__DIR__ . '/../resources/dist/backstage-announcements.css');
+
+    preg_match_all('/ba-popup-[a-z-]+/', $view, $m);
+    expect($m[0])->not->toBeEmpty();
+    foreach (array_unique($m[0]) as $class) {
+        expect($css)->toContain('.' . $class);
+    }
+});
