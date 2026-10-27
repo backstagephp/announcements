@@ -17,6 +17,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\HtmlString;
 use Livewire\Livewire;
 
+/**
+ * @property AnnouncementDisplay $display
+ */
 class Announcement extends Model
 {
     use HasFactory;
@@ -64,7 +67,11 @@ class Announcement extends Model
     public static function scopesSupportPopup(array $scopes): bool
     {
         foreach ($scopes as $scope) {
-            if (is_string($scope) && class_exists($scope) && is_a($scope, Page::class, true) && ! is_a($scope, SimplePage::class, true)) {
+            if (! class_exists($scope) || is_a($scope, SimplePage::class, true)) {
+                continue;
+            }
+
+            if (is_a($scope, Page::class, true)) {
                 return true;
             }
         }

@@ -31,6 +31,9 @@ php artisan vendor:publish --tag="backstage-announcements-migrations"
 php artisan migrate
 ```
 
+> [!NOTE]
+> Existing installs must publish and run the new `add_display_to_announcements_table` migration to use popup announcements. Existing announcements stay banners.
+
 Optionally, you can publish the views using
 
 ```bash
@@ -97,6 +100,18 @@ Once configured, you can create announcements through the Filament interface:
 2. **Content**: The announcement content (supports HTML)
 3. **Scopes**: Select which resources/pages the announcement should appear on
 4. **Color**: Choose a color theme for the announcement
+5. **Display as**: `Banner` (default) or `Popup with confirmation required`
+
+### Popup announcements
+
+Choosing **Popup with confirmation required** shows the announcement as a modal that blocks the page until the user clicks "I've read this". It has no close button, Esc does nothing and clicking the overlay does nothing.
+
+- Popups are mounted on the panel's `BODY_END` hook, one component per page, and use the package's own `.ba-popup-*` CSS shipped in the dist CSS.
+- Login, registration, password reset and any other `SimplePage` scope always show a banner instead of a popup.
+- The popup option is disabled in the form unless at least one page other than login or registration is selected.
+- When several popups apply to a page they are shown one after another, oldest first, with an "N of M" counter.
+- Each confirmation is stored per user. Use the **Reset dismissals** action to make everyone confirm the announcement again.
+- Guests never see popups.
 
 ### Displaying Announcements
 

@@ -32,6 +32,10 @@ class AnnouncementInfolist
                                     ->color(fn (?string $state): string => $state ?? 'gray')
                                     ->formatStateUsing(fn (?string $state): string => ucfirst($state ?? 'gray')),
 
+                                TextEntry::make('display')
+                                    ->label(__('backstage/announcements::backstage-announcements.display.label'))
+                                    ->badge(),
+
                                 TextEntry::make('scopes')
                                     ->label(__('Scopes'))
                                     ->badge()

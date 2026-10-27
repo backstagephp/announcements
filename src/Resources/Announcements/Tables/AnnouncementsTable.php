@@ -20,6 +20,9 @@ class AnnouncementsTable
             ->columns([
                 TextColumn::make('title')
                     ->searchable(),
+                TextColumn::make('display')
+                    ->label(__('backstage/announcements::backstage-announcements.display.label'))
+                    ->badge(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
