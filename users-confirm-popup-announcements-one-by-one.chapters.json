@@ -1,0 +1,18 @@
+[
+  {
+    "title": "Sign in: the login page shows the announcement as a banner",
+    "start": 2
+  },
+  {
+    "title": "A popup blocks the dashboard: 1 of 2",
+    "start": 13.033333333333333
+  },
+  {
+    "title": "The next popup follows: 2 of 2",
+    "start": 21.066666666666666
+  },
+  {
+    "title": "Confirmed popups don't come back",
+    "start": 26.95
+  }
+]
