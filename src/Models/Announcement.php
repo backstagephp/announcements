@@ -2,9 +2,11 @@
 
 namespace Backstage\Announcements\Models;
 
+use Backstage\Announcements\Database\Factories\AnnouncementFactory;
 use Backstage\Announcements\Livewire\Announcement as LivewireAnnouncement;
 use Filament\Facades\Filament;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -13,6 +15,7 @@ use Livewire\Livewire;
 
 class Announcement extends Model
 {
+    use HasFactory;
     use SoftDeletes;
 
     protected $fillable = [
@@ -37,6 +40,11 @@ class Announcement extends Model
         static::saving(function (self $announcement) {
             $announcement->scopes = ! empty($announcement->scopes) ? $announcement->scopes : ['*'];
         });
+    }
+
+    protected static function newFactory(): AnnouncementFactory
+    {
+        return AnnouncementFactory::new();
     }
 
     public function render(string $scope): Htmlable
